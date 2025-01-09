@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anggota Akrab</title>
+    <style>
+    @import url('https://fonts.googleapis.com/css2?family=Concert+One&family=Exo+2:ital,wght@0,100..900;1,100..900&family=Francois+One&family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=Spectral:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
+
+    body {
+        user-select: none;
+        font-family: "IBM Plex Sans", sans-serif;
+        font-weight: 400;
+        margin: 0;
+        padding: 0;
+        background-color: #f7f8fa;
+        color: #333;
+    }
+
+    .background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100px;
+        z-index: -1;
+        background: #1e9ab7;
+        border-radius: 0 0 30px 30px;
+    }
+
+    .container {
+        padding: 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    form {
+        display:flex;
+        flex-direction:column;
+        padding:5px;
+        justify-content:center;
+        align-items:center;
+        width:100%;
+    }
+    .isi {
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: white;
+        border-radius: 15px;
+        width: 100%;
+        box-shadow: 0 4px 4px rgba(204, 204, 204, 0.3);
+    }
+
+    .namagame {
+        display: flex;
+        width: 100%;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 10px;
+        padding: 5px;
+        color:black;
+    }
+
+    .namagame img {
+        width: 50px;
+        height: 50px;
+        border-radius: 10px;
+    }
+
+    .id-server {
+    display: flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    width: 100%; 
+    box-sizing: border-box; 
+    background: #1e9ab7;
+    padding:5px;
+    border-radius:15px;
+}
+
+.kontak-qr {
+    padding:10px;
+    display:flex;
+    justify-content:flex-start;
+    align-items:center;
+    gap:10px;
+    width:90%;
+}
+
+.kontak-qr a {
+    outline:none;
+    text-decoration:none;
+    color:white;
+    display:flex;
+    margin:0;
+    justify-content:center;
+    align-items:center;
+    gap:5px;
+    cursor:none;
+}
+
+.kontak-qr a h5 {
+    font-weight:normal;
+    margin:0;
+    color:F8F8F8;
+}
+
+.kontak-qr img{
+    width:15px;
+    height:15px;
+}
+
+.id-server input {
+    flex-grow: 1; 
+    padding: 15px;
+    border-radius: 10px;
+    border: none;
+    background: white;
+    color: black;
+    box-sizing: border-box;
+    width:100%;
+}
+
+.id-server input:focus {
+    outline: none;
+    color: black;
+}
+
+input::placeholder {
+    color: black;
+}
+    .product {
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        margin-bottom:10px;
+        display: flex;
+        justify-content:space-between;
+        align-items: center;
+        background-color: #fff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s;
+    }
+
+    .product:hover {
+        transform: scale(1.02);
+    }
+
+    .product img {
+        width: 50px;
+        height: auto;
+        border-radius: 5px;
+        margin-right: 15px;
+    }
+
+    .product div {
+        display:flex;
+        justify-content:center;
+        align-items:center;
+    }
+
+    .product p {
+        margin: 0;
+        color: #555;
+        padding:5px;
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+    }
+
+    .category-select {
+        padding:15px;    
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width:100%;
+        padding-bottom:0;
+    }
+
+    .category-select label {
+        font-weight: bold;
+        color: #555;      
+    }
+
+    .category-select select {
+        padding: 12px;
+        font-size: 1em;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        background: #fff;
+        outline: none;
+        transition: border-color 0.3s, box-shadow 0.3s;    
+        width:100%;    
+    }
+
+    .category-select select:focus {
+        border-color: #1e9ab7;
+        box-shadow: 0 0 4px rgba(0, 123, 255, 0.2);
+    }
+
+    .category-name {
+        font-weight: bold;
+        margin-bottom: 20px;
+        color: #555;
+        text-align: center;
+    }
+    
+
+    .actions {
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+        flex-wrap: wrap;
+    }
+
+    .actions button,
+    .actions input {
+        padding: 10px 20px;
+        font-size: 1em;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        background: #007bff;
+        color: #fff;
+        transition: background-color 0.3s, border-color 0.3s;
+        white-space: nowrap;
+    }
+
+    .actions button:hover {
+        background-color: #0056b3;
+        border-color: #0056b3;
+    }
+
+    .actions input {
+        width: 80px;
+        text-align: center;
+        background: #fff;
+        color: #333;
+        border: 1px solid #ccc;
+    }
+
+    .actions input:focus {
+        border-color: #ccc;
+    }
+
+    .loading {
+        text-align: center;
+        margin: 20px 0;
+        color: #007bff;
+    }
+
+    .error {
+        color: #e74c3c;
+        text-align: center;
+    }
+
+    .containerproduk {
+        padding: 20px;   
+        margin-top:-40px;
+    }
+
+    #pagination {
+        color: #333;
+    }
+
+    .container2 {
+        padding:10px;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+    }
+    
+    .isi2 {
+        padding:10px;
+        width:100%;
+        display:flex;
+        background: #1e9ab7;
+        justify-content:space-between;
+        align-items:center;
+        border-radius:10px;
+        margin-top:-15px;
+    }
+    
+    #status {
+            text-align:center;
+            font-size: 16px;
+            color: white;
+        }
+
+    
+    
+    input[type="submit"] {
+    background-color: white;
+    text-align:center;
+    padding:5px;
+    width:100px;
+    color: #1e9ab7;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 3px 2px rgba(0, 0, 0, 0.1);
+    font-weight:bold;
+}
+
+input[type="submit"]:hover {
+    background-color: #808080;
+    color:white;
+}
+    
+    
+
+    /* Modal Styles */
+    .container-modal {
+        padding:20px;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+    }
+    .modal {
+            display: none;
+            position: fixed;
+            flex-direction: column;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+        }
+        .modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            width: 80%;
+            max-width: 600px;
+            position: relative;
+            display:flex;
+            flex-direction:column;
+            justify-content: center;
+            align-items: center;
+        }
+
+    .close-btn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 20px;
+        color: #333;
+    }
+    
+    .modal-content p {
+        font-weight:bold;
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        width:100%;
+        border-bottom:1px dashed black;
+        padding:5px;
+    }
+        
+    #desk, 
+    #modalDescription {
+        border:none;
+    }
+    
+    #modalDescription {
+        border:1px solid black;
+        border-radius:20px;
+        font-weight:normal;
+    }
+    
+
+
+    
+      .modal-content h4 {
+        margin-top: 0;
+        background:#1e9ab7;
+        padding:20px;
+        width:100%;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        border-radius:5px;
+        color:white;
+        margin-top:-20px;
+    } 
+
+    #actionButtons {
+        text-align: center;
+        margin-top:20px;
+    }
+
+    #actionButtons button {
+        padding: 10px 20px;
+        font-size: 16px;
+        border: none;
+        border-radius: 5px;
+        background-color: #1e9ab7;
+        color: white;
+        margin: 0 10px;
+        width:100px;
+    }
+    
+    #backButton {
+        background-color:white !important;
+        color:#1e9ab7 !important;
+    }
+
+   
+    
+
+    /* Media Queries */
+    @media (max-width: 768px) {
+        .container {
+            padding: 10px;
+        }
+
+        .actions button,
+        .actions input {
+            padding: 10px;
+            font-size: 0.9em;
+        }
+    }
+
+    @media (max-width: 390px) {
+        .product .name,
+        .product .price {
+            font-size: 12px;
+        }
+
+        #apply-increase,
+        #copy-all,
+        #price-change {
+            font-size: 7px;
+        }
+    }
+
+@keyframes pop-in {
+     0% { opacity: 0; transform: scale(0.1);
+     }
+     100% { opacity: 1; transform: scale(1); 
+     }
+}
+
+
+.product {
+    animation: pop-in 0.5s ease-out;
+}
+</style>
+</head>
+<body>
+    <div class="background"></div>
+    <div class="container">
+        <div class="isi">
+            <div class="namagame">
+                <img src="https://iili.io/2hDp2wv.png" alt="Logo Game">
+                <h4>Anggota Akrab</h4>
+            </div>
+            <form id="mlAccountCheckerForm">
+            <div class="id-server">
+                <input type="text" id="catatan" name="catatan" class="form-control {{hasil_kontak}}" placeholder="Masukkan Nomer Telpon 08..." aria-describedby="basic-ID" value="" required>
+                <div class="kontak-qr">
+                    <a href="https://circelcuanmv.olshopku.com/ambil_kontak">
+                        <img src="https://iili.io/2jXILL7.png" alt="">
+                        <h5>Kontak</h5>
+                    </a>
+                </div>
+            </div> 
+            <!-- Tambahkan div untuk pesan peringatan -->
+<div id="warning-message" class="error" style="display: none; padding:5px;text-align:center;width:100%;">Harap isi ID terlebih dahulu.</div>
+             <div class="category-select">
+            <select id="category" style="display:none;">
+                
+                <!-- jangan dihapus null default -->
+                <option class="null" value="">Pilih Paket Data</option>  
+                <!-- jangan dihapus null default -->
+               
+                     <!-- xl -->
+                 <option class="xl" value="629849">Akrab Anggota</option>
+
+                     <!-- axis -->
+                 <option class="axis" value="629849">Akrab Anggota</option>
+            </select>
+            </div>
+        </div>
+    </div>
+    </form>
+    
+   <center> <div id="notification" style="display: none; padding: 10px; margin: 10px 0; border: 1px solid #ddd; border-radius: 4px; background-color: #f9f9f9; color: #333;"></div></center>
+       
+        <div class="category-name" id="category-name"></div>        
+        
+        <div class="containerproduk">
+        <!-- Kontainer Produk -->
+        <div id="product-container"></div>
+        <div id="pagination" class="loading"></div>
+        </div>
+
+        <!-- Modal -->
+<div class="container-modal">
+    <div class="modal" id="productModal">
+        <div class="modal-content">
+            <h4 id="modalTitle"></h4>
+            <p>Harga:<span id="modalPrice"></span></p>
+            <p>No Tujuan: <span id="modalNoTujuan"></span></p>
+            <p id="desk">Deskripsi:</p>
+            <p id="modalDescription"></p>
+        </div>
+        <!-- Tombol Kembali dan Beli di luar modal-content -->
+        <div id="actionButtons" style="display: none;">
+            <button id="backButton">Kembali</button>
+            <a id="buyButton" href="#" target="_blank">
+                <button>Beli</button>
+            </a>
+        </div>
+    </div>
+</div>
+
+<script>
+    var nomorKategori = {
+        '0817': 'xl',
+        '0818': 'xl',
+        '0819': 'xl',
+        '0859': 'xl',
+        '0877': 'xl',
+        '0878': 'xl',
+        '0838': 'axis',
+        '0831': 'axis',
+        '0832': 'axis',
+        '0833': 'axis',
+    };
+
+    function formatNomor(nomor) {
+        // Mengubah format nomor
+        if (nomor.startsWith('+62')) {
+            return '0' + nomor.slice(3);
+        }
+        return nomor;
+    }
+
+    function cariProvider() {
+        var nomor = formatNomor(document.getElementById('catatan').value.trim());
+        var categorySelect = document.getElementById('category');
+        var productElements = document.querySelectorAll('.product');
+        var options = document.querySelectorAll('#category option');
+
+        productElements.forEach(function(product) {
+            product.style.display = 'none';
+        });
+
+        if (nomor === '' || !/^\d{4,12}$/.test(nomor)) {
+            categorySelect.style.display = 'none';
+            // Reset ke opsi default (kelas null) saat input kosong
+            categorySelect.value = document.querySelector('#category option.null').value;
+            return;
+        }
+
+        categorySelect.style.display = 'none';
+        options.forEach(function(option) {
+            option.style.display = 'none';
+        });
+
+        var found = false;
+        for (var key in nomorKategori) {
+            if (nomor.startsWith(key)) {
+                // Tampilkan select dan opsi yang sesuai
+                categorySelect.style.display = 'block';
+                options.forEach(function(option) {
+                    if (option.classList.contains(nomorKategori[key])) {
+                        option.style.display = 'block';
+                    }
+                });
+
+                productElements.forEach(function(product) {
+                    if (product.classList.contains(nomorKategori[key])) {
+                        product.style.display = 'block';
+                    }
+                });
+
+                found = true;
+                break;
+            }
+        }
+
+        if (!found) {
+            categorySelect.style.display = 'none';
+            categorySelect.value = document.querySelector('#category option.null').value;
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const inputCatatan = document.getElementById('catatan');
+
+        function updateValue() {
+            inputCatatan.value = formatNomor(inputCatatan.value);
+            cariProvider();
+        }
+
+        // Tangani input dan paste dengan satu fungsi
+        inputCatatan.addEventListener('input', updateValue);
+
+        inputCatatan.addEventListener('paste', function(event) {
+            setTimeout(updateValue, 100); // Tunggu lebih lama untuk memastikan paste selesai
+        });
+    });
+</script>
+
+
+
+    <script>
+    const productContainer = document.getElementById('product-container');
+    const categoryDisplay = document.getElementById('category-name');
+    const pagination = document.getElementById('pagination');
+    let allProducts = [];
+    let currentPage = 1;
+
+    document.getElementById('category').addEventListener('change', function() {
+        const categoryId = this.value;
+        const categoryName = this.options[this.selectedIndex].text;
+        if (categoryId) {
+            productContainer.innerHTML = '';
+            pagination.textContent = 'Loading...';
+            allProducts = [];
+            currentPage = 1;
+            fetchProducts(categoryId, currentPage);
+        }
+    });
+
+    function fetchProducts(categoryId, page) {
+        fetch(`https://openapi.bukaolshop.net/v1/app/produk?token=eyJhcHAiOiIxNjMwMTciLCJhdXRoIjoiMjAyNDA5MTAiLCJzaWduIjoiU2JmTEdJcTFpb0h1OVBTU3hqMzVPdz09In0=&id_kategori=${categoryId}&page=${page}&per_page=10`)
+            .then(response => response.json())
+            .then(data => {
+                const products = data.data;
+                allProducts = allProducts.concat(products);
+
+                allProducts.sort((a, b) => {
+                    const priceA = typeof a.harga_produk === 'string'
+                        ? parseFloat(a.harga_produk.replace(/[^0-9.-]+/g, ''))
+                        : a.harga_produk;
+                    const priceB = typeof b.harga_produk === 'string'
+                        ? parseFloat(b.harga_produk.replace(/[^0-9.-]+/g, ''))
+                        : b.harga_produk;
+                    return priceA - priceB;
+                });
+
+                renderProducts();
+
+                if (products.length === 10) {
+                    currentPage++;
+                    pagination.textContent = 'Loading more products...';
+                    fetchProducts(categoryId, currentPage);
+                } else {
+                    pagination.textContent = '';
+                }
+            })
+            .catch(error => {
+                console.error('Terjadi kesalahan:', error);
+                showNotification('Kategori tidak ditemukan atau terjadi kesalahan.', 'error');
+                productContainer.innerHTML = '';
+                pagination.innerHTML = '';
+            });
+    }
+    
+    function formatRupiah(angka, prefix) {
+        var number_string = angka.toString().replace(/[^,\d]/g, ''),
+            split = number_string.split(','),
+            sisa = split[0].length % 3,
+            rupiah = split[0].substr(0, sisa),
+            ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+        if (ribuan) {
+            var separator = sisa ? '.' : '';
+            rupiah += separator + ribuan.join('.');
+        }
+
+        rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+        return prefix == undefined ? rupiah : (rupiah ? 'Rp ' + rupiah : '');
+    }
+
+    function renderProducts() {
+        productContainer.innerHTML = '';
+
+        allProducts.forEach(product => {
+            const productDiv = document.createElement('div');
+            productDiv.className = 'product';
+
+            const title = document.createElement('div');
+            title.className = 'name';
+            title.textContent = product.nama_produk;
+            productDiv.appendChild(title);
+
+            const price = document.createElement('div');
+            price.className = 'price';
+            const priceNumber = typeof product.harga_produk === 'string'
+                ? parseFloat(product.harga_produk.replace(/[^0-9.-]+/g, ''))
+                : product.harga_produk;
+            price.textContent = 'Rp ' + priceNumber.toLocaleString('id-ID', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+            productDiv.setAttribute('data-original-price', priceNumber);
+            productDiv.appendChild(price);
+
+            // Event listener untuk klik produk
+            productDiv.addEventListener('click', () => {
+                showProductModal(product); // Memunculkan modal dengan detail produk
+            });
+
+            productContainer.appendChild(productDiv);
+        });
+    }
+
+    function showProductModal(product) {
+    var catatanValue = document.getElementById('catatan').value;
+
+    if (!catatanValue) {
+        document.getElementById('warning-message').style.display = 'block';
+        return; // Tidak melanjutkan jika ID belum diisi
+    } else {
+        document.getElementById('warning-message').style.display = 'none';
+    }
+
+    // Mengganti +62 menjadi 0
+    catatanValue = catatanValue.replace(/^\+62/, '0');
+
+    var gabunganNilai = catatanValue;
+
+    document.getElementById('modalTitle').textContent = product.nama_produk || '';
+    document.getElementById('modalPrice').textContent = 'Rp ' + formatRupiah(product.harga_produk) || '';
+    document.getElementById('modalNoTujuan').textContent = gabunganNilai || '';
+
+    document.getElementById('modalDescription').innerHTML = product.deskripsi_panjang || '';
+
+    document.getElementById('actionButtons').style.display = 'block';
+
+    var buyButton = document.getElementById('buyButton');
+    buyButton.href = `${product.url_produk}?catatan=${encodeURIComponent(gabunganNilai)}`;
+
+    var modal = document.getElementById('productModal');
+    modal.style.display = 'flex';
+}
+
+// Menutup modal menggunakan tombol Kembali
+document.getElementById('backButton').onclick = function() {
+    document.getElementById('productModal').style.display = 'none';
+    document.getElementById('actionButtons').style.display = 'none';
+};
+
+// Menutup modal saat klik di luar modal
+window.onclick = function(event) {
+    if (event.target === document.getElementById('productModal')) {
+        document.getElementById('productModal').style.display = 'none';
+        document.getElementById('actionButtons').style.display = 'none';
+    }
+};
+</script>
+<script>
+    document.getElementById('mlAccountCheckerForm').addEventListener('submit', async function(event) {
+        event.preventDefault(); // Prevent form from submitting normally
+
+        const id = document.getElementById('catatan').value; // Ambil ID dari input
+        const api_key = 'a3203b113150dc05db11b8ff6700cf3995afc1d803d2cf2199'; // Gantilah dengan API key Anda
+
+        // Format URL dengan parameter yang benar
+        const url = `https://api.velixs.com/idgames-checker?game=freefire&id=${id}&apikey=${api_key}`;
+
+        const options = {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        };
+
+        // Update status text
+        const statusDiv = document.getElementById('status');
+        statusDiv.textContent = 'Loading...';
+
+        try {
+            console.log('Request URL:', url); // Debugging
+            const response = await fetch(url, options);
+            if (!response.ok) {
+                const errorText = await response.text(); // Get error details
+                throw new Error(`HTTP error! Status: ${response.status} - ${errorText}`);
+            }
+            const result = await response.json();
+
+            // Debugging: Periksa hasil respons di konsol
+            console.log('API Response:', JSON.stringify(result, null, 2));
+
+            // Tampilkan respons API sesuai dengan struktur data yang benar
+            if (result.status && result.data && result.data.username) {
+                const username = result.data.username;
+                statusDiv.textContent = `Username: ${username}`;
+            } else {
+                statusDiv.textContent = 'ID TIDAK VALID!';
+            }
+        } catch (error) {
+            console.error('Fetch error:', error);
+            statusDiv.textContent = 'ID TIDAK VALID!';
+        }
+    });
+    
+</script>
+</body>
+</html>
