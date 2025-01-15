@@ -1,0 +1,221 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>circelcuanmv | Halaman Login OTP </title>
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #1976D2, #1976D2, #1976D2);
+    animation: gradient 10s ease infinite;
+}
+
+@keyframes gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.container {
+            width: 100%;
+            max-width: 400px;
+            background: #8ba2bb;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            padding: 20px;
+            box-sizing: border-box;
+            text-align: center;
+            color: #ffffff;
+        }
+input, button {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+button {
+    background: #1976D2;
+    color: white;
+    border: none;
+}
+
+input[type="tel"] {
+    text-align: center;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+        h4 {
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #ffffff;
+        }
+        input[type="tel"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ffffff;
+            border-radius: 5px;
+            background-color: #ffffff;
+            backgroud:333;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #ffffff;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            box-sizing: border-box;
+        }
+        input[type="submit"]:hover {
+            background-color: #ffffff; /* Update hover color */
+        }
+        .refresh-button {
+            background: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            box-sizing: border-box;
+            margin-top: 15px;
+            type: button; /* Ensure it doesn’t submit the form */
+        }
+        .refresh-button:hover {
+            background-color: #ffffff; /* Update hover color */
+        }
+        .info {
+            color: #ffffff;
+            margin-top: 15px;
+        }
+    </style>
+    <link rel="stylesheet" href="css/sweetalert2.min.css">
+    <script src="js/sweetalert2.all.min.js"></script>
+</head>
+<body>
+<div class="container">
+        <marquee behavior="scroll" direction="left">
+            SELAMAT DATANG DI CIRCLECUANMV.
+        </marquee>
+
+    <div class="container">
+    <h2> FORM LOGIN OTP BUYER </h2>
+    <h4> SOLUSI CEPAT TANPA ANTRE PROSES OTP KE SELLER </h4>
+    <form id="otpForm">
+        <div id="phoneForm">
+            <input type="tel" id="phone" name="phone" placeholder="Masukkan Nomor Telepon" required="">
+            <button type="button" onclick="requestOTP()">Kirim OTP</button>
+        </div>
+        <div id="otpFormSection" style="display: none;">
+            <input type="text" id="otp" name="otp" placeholder="Masukkan OTP" required="">
+            <button type="button" onclick="verifyOTP()">Verifikasi OTP</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    function requestOTP() {
+        const phone = document.getElementById('phone').value;
+
+        fetch('', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams({
+                action: 'request_otp',
+                phone: phone
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                Swal.fire('OTP Dikirim', data.message, 'success');
+                document.getElementById('phoneForm').style.display = 'none';
+                document.getElementById('otpFormSection').style.display = 'block';
+            } else {
+                Swal.fire('Error', data.message, 'error');
+            }
+        });
+    }
+
+    function verifyOTP() {
+    const phone = document.getElementById('phone').value;
+    const otp = document.getElementById('otp').value;
+
+    fetch('', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({
+            action: 'verify_otp',
+            phone: phone,
+            otp: otp
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            Swal.fire({
+                title: 'Berhasil Login',
+                text: data.message,
+                icon: 'success',
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                showConfirmButton: false
+            });
+        } else {
+            Swal.fire('Gagal Login', data.message, 'error');
+        }
+    });
+}
+function toggleNavbar() {
+            const navbar = document.querySelector('.navbar');
+            navbar.classList.toggle('active');
+        }
+
+        // 
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+
+        document.onkeydown = function(e) {
+            
+            if (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) { // Ctrl+Shift+I
+                return false;
+            }
+            if (e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) { // Ctrl+Shift+C
+                return false;
+            }
+            if (e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) { // Ctrl+Shift+J
+                return false;
+            }
+            if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) { // Ctrl+U
+                return false;
+            }
+        }
+
+
+</script>
+
+
+
+</div></body></html>
